@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DiscountView extends StatelessWidget {
-  const DiscountView({super.key});
+  final double offerPrice;
+  const DiscountView({super.key, required this.offerPrice});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class DiscountView extends StatelessWidget {
                          
                          ],
                                    ),
-                      child: const Center(child: Text("\$2.1 offer",style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),)),),],),
+                      child:  Center(child: Text("\$${offerPrice} oFF",style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),)),),],),
                  );
   }
 }

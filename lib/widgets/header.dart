@@ -1,16 +1,19 @@
   import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:pizzai_pioneers/main_screen.dart';
+
  class  HeaderView extends StatefulWidget {
-   const HeaderView({super.key});
- 
-   @override
-   State<HeaderView> createState() => _HeaderViewState();
- }
- 
- class _HeaderViewState extends State<HeaderView> {
+  final String prices;
+    HeaderView({super.key, required this.prices});
+
+  @override
+  State<HeaderView> createState() => _HeaderViewState();
+}
+
+class _HeaderViewState extends State<HeaderView> {
    final DateTime now = DateTime.now();
+
         final DateFormat formatter = DateFormat('dd MMMM yyyy');
+
    @override
    Widget build(BuildContext context) {
      return  Padding(
@@ -48,7 +51,7 @@ import 'package:pizzai_pioneers/main_screen.dart';
                           children: [
                            const  Text("Total Amount"),
                            const SizedBox(height: 5,),
-                           const Text("\$ 45.85"),
+                            Text("\$ ${widget.prices}"),
                           const  SizedBox(height: 5,),
                     
                           Container(
@@ -63,7 +66,7 @@ import 'package:pizzai_pioneers/main_screen.dart';
               ),
             );
    }
- } 
+} 
    
 
       

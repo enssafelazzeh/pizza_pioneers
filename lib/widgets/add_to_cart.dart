@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
 class AddToCartView extends StatelessWidget {
-  const AddToCartView({super.key});
+  final double price ;
+  final int qty;
+  final Function() onMiuns;
+  final Function ()onPlus;
+  const AddToCartView({super.key, required this.price, required this.qty, required this.onMiuns, required this.onPlus});
 
   @override
   Widget build(BuildContext context) {
     return  Row(children: [
-                 GestureDetector(
+            qty > 0?     GestureDetector(
                        child: Container(width: 25 , height: 25,
                                        decoration:  BoxDecoration(
                                           color: Color(0xffE9E9E9),
@@ -22,15 +26,16 @@ class AddToCartView extends StatelessWidget {
                                          
                                           ),
                                           onTap: () {
+                                            onMiuns();
                                             print("-");
                                           },
-                     ),
+                     ): Container(),
                      SizedBox(width: 10,),
                      Container(
                       height: 30,
                       width: 50,
                       decoration: BoxDecoration(color: Color(0xffE9E9E9),),
-                      child: Row(children: [Text("\$ 4.0" ,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)],),
+                      child: Row(children: [Text( qty >0 ? "\$ ${(price * qty).toStringAsFixed(1)}":"\$ ${price.toStringAsFixed(1)}" ,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)],),
                      ),
                      SizedBox(width: 10,),
                                 InkWell(
@@ -49,6 +54,9 @@ class AddToCartView extends StatelessWidget {
                                          
                                           ),
                                           onTap: () {
+                                            onPlus();
+                                            
+                                           // qty= qty+1;
                                             print("+");
                                           },
                      ),

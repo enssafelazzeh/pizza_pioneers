@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pizzai_pioneers/model/item.dart';
 import 'package:pizzai_pioneers/widgets/add_to_cart.dart';
 import 'package:pizzai_pioneers/widgets/chart.dart';
 import 'package:pizzai_pioneers/widgets/discount.dart';
@@ -6,8 +7,16 @@ import 'package:pizzai_pioneers/widgets/properties.dart';
 import 'package:pizzai_pioneers/widgets/qty.dart';
 import 'package:pizzai_pioneers/widgets/rating.dart';
 
-class MainItemView extends StatelessWidget {
-  const MainItemView({super.key});
+class MainItemView extends StatefulWidget {
+final Item item;
+  final Function() onChange;
+  const MainItemView({super.key, required this.item, required this.onChange});
+
+  @override
+  State<MainItemView> createState() => _MainItemViewState();
+}
+
+class _MainItemViewState extends State<MainItemView> {
 
   @override
   Widget build(BuildContext context) {
@@ -27,22 +36,29 @@ class MainItemView extends StatelessWidget {
       ),
       ],
                 ),
-                child: Row(children: [Stack(children:[ Image.asset("assets/pizza2.jpeg",width: 150,),
-            const DiscountView(),
-            const QtyView() ,    
+                child: Row(children: [Stack(children:[ Image.asset("assets/pizza${widget.item.image}.jpeg",width: 150,),
+               widget.item.offerPrice>0 ? DiscountView( offerPrice: widget.item.offerPrice ,): Container(),
+             widget.item.qty>0 ? QtyView(qty: widget.item.qty,):Container() ,    
                  ]
                  ),
-                 const Column(
+             Column(
                   crossAxisAlignment: CrossAxisAlignment.start
                   ,
                   children: [
-                  SizedBox(height: 25,),
-                  Text("White Chicken", style: TextStyle(color: Color(0xFF515F65),fontSize: 20,fontWeight: FontWeight.w500),),
-                   Text("Spicy chicken",style: TextStyle(color: Color(0xFF515F65),fontSize: 12,fontWeight: FontWeight.w400),),
-                   SizedBox(height: 3,),
-                  RatingView(),
-                   SizedBox(height: 30,),
-                  AddToCartView()
+                  const SizedBox(height: 25,),
+                  Text(widget.item.nameprodect, style: TextStyle(color: Color(0xFF515F65),fontSize: 20,fontWeight: FontWeight.w500),),
+                   Text(widget.item.desc,style: TextStyle(color: Color(0xFF515F65),fontSize: 12,fontWeight: FontWeight.w400),),
+                   const SizedBox(height: 3,),
+                  RatingView(rate: widget.item.rate,),
+                   const SizedBox(height: 30,),
+                  AddToCartView(price: widget.item.price, qty: widget.item.qty, 
+                  onMiuns: () {
+                     widget.item.qty=widget.item.qty-1
+                     ;print("ensaf${widget.item.qty}");
+                      widget.onChange();
+                     },
+                   onPlus: () { widget.item.qty=widget.item.qty+1;
+                  widget.onChange();},)
                  ],),
                  
                  Padding(
@@ -51,10 +67,10 @@ class MainItemView extends StatelessWidget {
                     
                     crossAxisAlignment:CrossAxisAlignment.start,
                     children: [
-                    ChartView(),
-                      PropertiesView(title: 'proteins', value: '16.2',),
-                     PropertiesView(title: 'carborhydrate', value: '13.9',),
-                     PropertiesView(title: 'fabir', value: '8.6',),
+                    ChartView(kcal: widget.item.kcal,),
+                      PropertiesView(title: 'proteins', value: '${widget.item.protiens}',),
+                     PropertiesView(title: 'carborhydrate', value: '${widget.item.carbo}',),
+                     PropertiesView(title: 'fabir', value: '${widget.item.fiber}',),
                                
                    ],),
                  )

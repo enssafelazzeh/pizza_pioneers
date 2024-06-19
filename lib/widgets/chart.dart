@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class ChartView extends StatelessWidget {
-  const ChartView({super.key});
+  final int kcal;
+  const ChartView({super.key, required this.kcal});
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +16,12 @@ class ChartView extends StatelessWidget {
       CircularStackEntry(
         <CircularSegmentEntry>[
          CircularSegmentEntry(
-            33.33,
+            (kcal/10).toDouble(),
             Colors.green,
           
           ),
            CircularSegmentEntry(
-            66.67,
+           (1000-(kcal/10)).toDouble(),
             Colors.grey[600],
           
           ),
@@ -36,7 +37,7 @@ class ChartView extends StatelessWidget {
     left: 10,
      child: Column(
        children: [
-         Text("510", style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold),),
+         Text("${kcal}", style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold),),
          Text("kcal", style: TextStyle(color: Color(0xFF515F65),fontSize: 6,fontWeight: FontWeight.w500),),
        ],
      ),
